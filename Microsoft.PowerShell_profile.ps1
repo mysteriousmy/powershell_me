@@ -93,7 +93,10 @@ function env_tool {
     process {
         switch ($PSCmdlet.ParameterSetName) {
             'add' {
-                foreach ($entry in $paths) {
+               foreach ($entry in $paths) {
+                    if($entry.GetType().Name -ne "String"){
+                        $entry = $entry.ToString()
+                    }
                     $entry = $entry.Trim()
                     if ([string]::IsNullOrEmpty($entry)) { continue }
                     $regVal += $entry + ';'
@@ -101,6 +104,9 @@ function env_tool {
             }
             'delete' {
                 foreach ($entry in $paths) {
+                    if($entry.GetType().Name -ne "String"){
+                        $entry = $entry.ToString()
+                    }
                     $entry = $entry.Trim()
                     if ([string]::IsNullOrEmpty($entry)) { continue }
                     #在参数末尾添加路径分隔符 \
